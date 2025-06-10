@@ -1,5 +1,3 @@
-# Causal discovery in mixed additive noise models
-
 ## Mixed-type data Extension for Regression and Independence Testing (MERIT)
 
 This is the implementation of MERIT from the paper:
