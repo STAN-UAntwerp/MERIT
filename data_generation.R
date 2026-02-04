@@ -8,6 +8,7 @@ noise.types <- c("uniform", "logis")
 function.types <- c("linear", "MLP")
 function.types <- c("linear")
 dir.create(file.path("data/"), showWarnings = FALSE)
+n_level <- 5 # choose the number of levels in categorical variables, e.g., 2, 3, 5
 
 
 for (p in p_sets){
@@ -18,15 +19,15 @@ for (p in p_sets){
           set.seed(rep)
           if (function.type == "linear"){
             data.t <- sim.lingam2(1000, p, g.type = g.type, noise.type = noise.type,
-                                  n_level = 5, cats_num = floor(p/2))
+                                  n_level = n_level, cats_num = floor(p/2))
           } else if (function.type == "MLP") {
             data.t <- sim.nonlinear(1000, p, g.type = g.type, noise.type = noise.type,
-                                    n_level = 5)
-            # make sure the categorical variable has 5 levels in the outcome
+                                    n_level = n_level)
+            # make sure the categorical variable has "n_level" levels in the outcome
             cats <- data.t$samples[,p]
-            while (length(unique(cats)) != 5){
+            while (length(unique(cats)) != n_level){
               data.t <- sim.nonlinear(1000, p, g.type = g.type, noise.type = noise.type,
-                                      n_level = 5)
+                                      n_level = n_level)
               cats <- data.t$samples[,p]
             }
           }
